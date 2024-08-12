@@ -1,6 +1,8 @@
 # knock-knock game project
-This is a progress log for this personal project. Knock-Knock is a card game that is essentially Uno, but with a normal deck of playing cards. Players can play according to base rules, or they can choose to create their own custom rules to spice up the game. This project is trying to create a digital version of this beloved game. 
+This is a progress log for this personal project. Knock-Knock is a card game that is essentially Uno, but with a normal deck of playing cards. Players can play according to base rules, or they can choose to create their own custom rules to 
+spice up the game. This project is trying to create a digital version of this beloved game. 
 # progress log
 ## 08-12-2024 Day 2
 ## 08-11-2024 - Day 1 (this was done in the last hour of the day, so not much progress, I must admit)
-We finally stopped procrastinating and started mapping out the elements of the game. We will be using Java since that's what we're most comfortable with using. We also started mapping out the different features we wanted and split them according to MVC (although we're not sure what else to put into controller besides execute lol). 
+We finally stopped procrastinating and started mapping out the elements of the game. We will be using Java since that's what we're most comfortable with using. We also started mapping out the different features we wanted and split them 
+according to MVC (although we're not sure what else to put into controller besides execute lol). 
