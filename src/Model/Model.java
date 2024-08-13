@@ -3,7 +3,10 @@ package Model;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * The following class represents the Model of the Knock Knock Game, consisting of the current
+ * list of players in the game and the rules for the round.
+ */
 public class Model implements GameModel {
   List<Player> players;
   Map<Card, String> rules;
