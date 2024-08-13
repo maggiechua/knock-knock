@@ -3,21 +3,37 @@ package Model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The following class CardDeck represents the card deck for the game. This card deck is based on
+ * a standard deck of cards (52 cards), but depending on the number of players, will consist of
+ * multiple decks for the sake of interesting gameplay.
+ */
 public class CardDeck {
   private Integer numDecks;
   private Map<Integer, Card> standardDeck;
-
+  
   public CardDeck(Integer numDecks) {
     this.numDecks = numDecks;
     this.standardDeck = new HashMap<>();
     this.populate();
   }
 
+  /**
+   * The generateCard() method returns the corresponding card that the given integer is associated
+   * with.
+   * @param val the card to retrieve represented as an Integer
+   * @return a Card object
+   */
   public Card generateCard(Integer val) {
-
+    // checking to see if we exceeded the valid number of cards available in the deck if the
+    // same number is provided??
     return standardDeck.get(val);
   }
 
+  /**
+   * The populate() method populates the standardDeck Map where each card is associated with an
+   * Integer value for the purposes of card generation.
+   */
   private void populate() {
     standardDeck.put(1, new Card("D", "1"));
     standardDeck.put(2, new Card("D", "2"));
