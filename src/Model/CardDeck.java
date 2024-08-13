@@ -57,7 +57,7 @@ public class CardDeck {
    * Integer value for the purposes of card generation.
    */
   private void populate() {
-    standardDeck.put(1, new Card("D", "1"));
+    standardDeck.put(1, new Card("D", "A"));
     standardDeck.put(2, new Card("D", "2"));
     standardDeck.put(3, new Card("D", "3"));
     standardDeck.put(4, new Card("D", "4"));
@@ -71,7 +71,7 @@ public class CardDeck {
     standardDeck.put(12, new Card("D", "Q"));
     standardDeck.put(13, new Card("D", "K"));
 
-    standardDeck.put(14, new Card("C", "1"));
+    standardDeck.put(14, new Card("C", "A"));
     standardDeck.put(15, new Card("C", "2"));
     standardDeck.put(16, new Card("C", "3"));
     standardDeck.put(17, new Card("C", "4"));
@@ -85,7 +85,7 @@ public class CardDeck {
     standardDeck.put(25, new Card("C", "Q"));
     standardDeck.put(26, new Card("C", "K"));
 
-    standardDeck.put(27, new Card("H", "1"));
+    standardDeck.put(27, new Card("H", "A"));
     standardDeck.put(28, new Card("H", "2"));
     standardDeck.put(29, new Card("H", "3"));
     standardDeck.put(30, new Card("H", "4"));
@@ -99,7 +99,7 @@ public class CardDeck {
     standardDeck.put(38, new Card("H", "Q"));
     standardDeck.put(39, new Card("H", "K"));
 
-    standardDeck.put(40, new Card("S", "1"));
+    standardDeck.put(40, new Card("S", "A"));
     standardDeck.put(41, new Card("S", "2"));
     standardDeck.put(42, new Card("S", "3"));
     standardDeck.put(43, new Card("S", "4"));

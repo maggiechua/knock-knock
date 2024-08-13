@@ -1,5 +1,9 @@
 package Controller;
 
+import java.io.InputStreamReader;
+import java.util.Random;
+import java.util.Scanner;
+
 import Model.GameModel;
 import View.GameView;
 
@@ -11,6 +15,7 @@ import View.GameView;
 public class Controller implements GameController {
   private GameModel model;
   private GameView view;
+  private Readable rd;
 
   /**
    * The Controller constructor uses a given model and view to allow for gameplay
@@ -25,11 +30,16 @@ public class Controller implements GameController {
     else {
       this.model = model;
       this.view = view;
+      this.rd = new InputStreamReader(System.in);
     }
   }
 
   @Override
   public void execute() {
+    Scanner sc = new Scanner(rd);
+    view.welcomeMessage();
+    model.generateHands(new Random());
+    view.printPlayerHand(model.getHand());
 
   }
 }

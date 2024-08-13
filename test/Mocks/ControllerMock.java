@@ -1,4 +1,10 @@
 package Mocks;
 
-public class ControllerMock {
+import Controller.GameController;
+
+public class ControllerMock implements GameController {
+  @Override
+  public void execute() {
+
+  }
 }
