@@ -9,11 +9,19 @@ import java.util.Map;
  * multiple decks for the sake of interesting gameplay.
  */
 public class CardDeck {
-  private Integer numDecks;
+  private Integer capacity;
+  private Integer front;
+  private Integer rear;
+  private Integer size;
+  private Card drawingPile[];
   private Map<Integer, Card> standardDeck;
-  
+
   public CardDeck(Integer numDecks) {
-    this.numDecks = numDecks;
+    this.capacity = numDecks * 52;
+    this.front = 0;
+    this.rear = capacity - 1;
+    this.size = 0;
+    this.drawingPile = new Card[this.capacity];
     this.standardDeck = new HashMap<>();
     this.populate();
   }
@@ -28,6 +36,20 @@ public class CardDeck {
     // checking to see if we exceeded the valid number of cards available in the deck if the
     // same number is provided??
     return standardDeck.get(val);
+  }
+
+  public void updateCirculation() {
+
+  }
+
+  public void enqueue(Card c) {
+    this.rear = this.rear + 1;
+    this.drawingPile[this.rear] = c;
+    this.size += 1;
+  }
+
+  public void dequeue() {
+
   }
 
   /**
