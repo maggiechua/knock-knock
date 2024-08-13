@@ -2,19 +2,19 @@ package Model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * The following class represents the Model of the Knock Knock Game, consisting of the current
  * list of players in the game and the rules for the round.
  */
 public class Model implements GameModel {
-  List<Player> players;
-  Map<Card, String> rules;
+  private List<Player> players;
+  private Map<Card, String> rules;
 
   public Model(List<Player> players, Map<Card, String> rules) {
     this.players = players;
     this.rules = rules;
-    this.generateHands();
   }
 
   @Override
@@ -40,10 +40,20 @@ public class Model implements GameModel {
   }
 
   @Override
-  public void generateHands() {
+  public Card generateStartingCard() {
+    return null;
+  }
+
+  @Override
+  public void generateHands(Random rand) {
     for (Player p : players) {
-      p.generateHand();
+      p.generateHand(rand);
     }
+  }
+
+  @Override
+  public List<Card> getHand() {
+    return players.get(0).getPlayerHand();
   }
 
   @Override

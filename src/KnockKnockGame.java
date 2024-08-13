@@ -36,7 +36,7 @@ public class KnockKnockGame {
     ));
 
     GameModel model = new Model(players, baseRules);
-    GameView view = new View();
+    GameView view = new View(System.out);
     GameController controller = new Controller(model, view);
     controller.execute();
   }
