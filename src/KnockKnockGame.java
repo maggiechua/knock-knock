@@ -4,12 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Controller.Controller;
+import Controller.GameController;
 import Model.GameModel;
 import Model.Model;
 import Model.Card;
 import Model.Player;
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import View.GameView;
+import View.View;
+
+/**
+ * This is the main method of the Knock-Knock Game so that it can be run for
+ * entertainment. The following represents the base game representation which consists of
+ * four players, base rules, and a text-based version of the game.
+ */
 public class KnockKnockGame {
   public static void main(String[] args) {
     Map<Card, String> baseRules = new HashMap<>();
@@ -28,6 +36,8 @@ public class KnockKnockGame {
     ));
 
     GameModel model = new Model(players, baseRules);
-
+    GameView view = new View();
+    GameController controller = new Controller(model, view);
+    controller.execute();
   }
 }

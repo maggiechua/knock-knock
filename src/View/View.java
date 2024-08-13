@@ -1,4 +1,4 @@
 package View;
 
-public class View {
+public class View implements GameView {
 }
