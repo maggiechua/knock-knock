@@ -5,12 +5,13 @@ import java.util.Map;
 
 
 public class Model implements GameModel {
-  Map<Player, List<Card>> players;
+  List<Player> players;
   Map<Card, String> rules;
 
-  public Model(Map<Player, List<Card>> players, Map<Card, String> rules) {
+  public Model(List<Player> players, Map<Card, String> rules) {
     this.players = players;
     this.rules = rules;
+    this.generateHands();
   }
 
   @Override
@@ -24,8 +25,10 @@ public class Model implements GameModel {
   }
 
   @Override
-  public void modifyRule(String card, String rule) {
-
+  public void modifyRule(Card card, String rule) {
+    if (rules.containsKey(card)) {
+      rules.put(card, rule);
+    }
   }
 
   @Override
@@ -34,8 +37,10 @@ public class Model implements GameModel {
   }
 
   @Override
-  public void generateHand() {
-
+  public void generateHands() {
+    for (Player p : players) {
+      p.generateHand();
+    }
   }
 
   @Override

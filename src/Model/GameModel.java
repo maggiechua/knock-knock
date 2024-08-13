@@ -6,11 +6,11 @@ public interface GameModel {
 
   void changeDisplayMode();
 
-  void modifyRule(String card, String rule);
+  void modifyRule(Card card, String rule);
 
   boolean canModifyRules();
 
-  void generateHand();
+  void generateHands();
 
   void updateHand(String card);
 
