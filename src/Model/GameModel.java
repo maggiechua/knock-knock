@@ -23,7 +23,7 @@ public interface GameModel {
    * The generateHands() method is called to provide each players a random set of 7 cards in the
    * card deck.
    */
-  void generateHands(Random rand);
+  void generateHands();
 
   List<Card> getHand();
 

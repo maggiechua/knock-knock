@@ -28,4 +28,6 @@ public interface GameView {
    * @param hand the cards in the user's hand represented as a List
    */
   void printPlayerHand(List<Card> hand);
+
+  void printPlayerTurn();
 }

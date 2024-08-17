@@ -11,10 +11,12 @@ import java.util.Random;
 public class Model implements GameModel {
   private List<Player> players;
   private Map<Card, String> rules;
+  private CardDeck cardDeck;
 
-  public Model(List<Player> players, Map<Card, String> rules) {
+  public Model(List<Player> players, Map<Card, String> rules, CardDeck cardDeck) {
     this.players = players;
     this.rules = rules;
+    this.cardDeck = cardDeck;
   }
 
   @Override
@@ -41,13 +43,13 @@ public class Model implements GameModel {
 
   @Override
   public Card generateStartingCard() {
-    return null;
+    return cardDeck.generateStartingCard();
   }
 
   @Override
-  public void generateHands(Random rand) {
+  public void generateHands() {
     for (Player p : players) {
-      p.generateHand(rand);
+      p.generateHand();
     }
   }
 

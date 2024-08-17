@@ -25,4 +25,9 @@ public class ViewMock implements GameView {
   public void printPlayerHand(List<Card> hand) {
 
   }
+
+  @Override
+  public void printPlayerTurn() {
+
+  }
 }
