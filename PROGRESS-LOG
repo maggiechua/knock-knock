@@ -1,16 +1,27 @@
 # knock-knock game project
 This is a progress log for this personal project. Knock-Knock is a card game that is essentially Uno, but with a normal deck of playing cards. Players can play according to base rules, or they can choose to create their own custom rules to spice up the game. This project is trying to create a digital version of this beloved game. 
 # progress log
+## 08-17-2024 Day 5
+
+## 08-16-2024 Day 4
+I am writing this the day after, but the changes we made were majorly made the night before, but we were too lazy to write them down. We figured out all our next steps(ish), which is shown with the following symbols (X = complete; / = kind of). I'm not fully sure how to actually test everything nor how to get the player rotation to occur since that will involve lots of printing to the console, but it should be doable. We also did make progress on 08-13-2024 but to be honest, I don't think it resulted in much since we overhauled it today. 
+
+Next action steps:
+[] rotation between players displaying their piles and asking them to select what card they want to play
+[] determine what cards in a hand can be played and display them in bold for user to choose from 
+[] computerized version for other players that will automatically select what to play (maybe just first valid card as an AI would be needed for strategic moves ig)
+[] write out tests to prove the card generation items for the game as well as the mocks to do so
+
 ## 08-12-2024 Day 2
 We spent some time in the evening working on the game and we figured out a little bit about the process that we should take for this project. A lot of it is referencing the project from OOD lol:
 [] going to start with a text-based interface of the game to ensure things are working
 [] move onto a nice UI with a GUI
 [] then incorporate special features such as private rooms with friend invites/random players server, etc.
 
-We'll see how much we can complete before we need to move back to Boston and the schoolyear begins. The reassuring thing is that I figured out what action steps to take:
-[] figure out how to incorporate a queue for the card pile (what cards are in circulation vs. not)
-[] write out tests to prove that random cards are given to each player without duplicates the exceed totally quantity of cards in game pile (i.e. if we are using multiple decks)
-[] build out controller to send info to view to display the current players' piles as well as text to tell them to select what card they want to play 
+We'll see how much we can complete before we need to move back to Boston and the schoolyear begins. The reassuring thing is that I figured out what action steps to take: -> 08-16-2024
+[X] figure out how to incorporate a queue for the card pile (what cards are in circulation vs. not)
+[/] write out tests to prove that random cards are given to each player without duplicates the exceed totally quantity of cards in game pile (i.e. if we are using multiple decks)
+[/] build out controller to send info to view to display the current players' piles as well as text to tell them to select what card they want to play 
 
 ## 08-11-2024 - Day 1 (this was done in the last hour of the day, so not much progress, I must admit)
 We finally stopped procrastinating and started mapping out the elements of the game. We will be using Java since that's what we're most comfortable with using. We also started mapping out the different features we wanted and split them according to MVC (although we're not sure what else to put into controller besides execute lol). 
