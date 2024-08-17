@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.InputStreamReader;
-import java.util.Random;
 import java.util.Scanner;
 
 import Model.GameModel;
@@ -36,10 +35,18 @@ public class Controller implements GameController {
 
   @Override
   public void execute() {
+    // Setup of the Game
     Scanner sc = new Scanner(rd);
     view.welcomeMessage();
-    model.generateHands(new Random());
+    model.generateHands();
+
+    // Basic Gameplay - Display Hand, Play Card, Valid -> Continue | Invalid -> Ask Again
+    // Special Feature - makes bold the cards that the player can play
     view.printPlayerHand(model.getHand());
+    view.printTopCardInPile(model.generateStartingCard());
+    view.printPlayerTurn();
+    String nextPlay = sc.next();
+    model.canPlayCard(nextPlay);
 
   }
 }

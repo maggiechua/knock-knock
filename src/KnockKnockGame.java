@@ -10,6 +10,7 @@ import Model.GameModel;
 import Model.Model;
 import Model.Card;
 import Model.Player;
+import Model.CardDeck;
 import View.GameView;
 import View.View;
 
@@ -28,14 +29,14 @@ public class KnockKnockGame {
             "8 of hearts)");
     baseRules.put(new Card("any", "A"), "skip the next player's turn");
     baseRules.put(new Card("any", "7"), "reverse direction");
+    CardDeck cardDeck = new CardDeck(2);
     List<Player> players = new ArrayList<>(Arrays.asList(
-            new Player("Player 1", new ArrayList<Card>()),
-            new Player("Player 2", new ArrayList<Card>()),
-            new Player("Player 3", new ArrayList<Card>()),
-            new Player("Player 4", new ArrayList<Card>())
+            new Player("Player 1", new ArrayList<Card>(), cardDeck),
+            new Player("Player 2", new ArrayList<Card>(), cardDeck),
+            new Player("Player 3", new ArrayList<Card>(), cardDeck),
+            new Player("Player 4", new ArrayList<Card>(), cardDeck)
     ));
-
-    GameModel model = new Model(players, baseRules);
+    GameModel model = new Model(players, baseRules, cardDeck);
     GameView view = new View(System.out);
     GameController controller = new Controller(model, view);
     controller.execute();

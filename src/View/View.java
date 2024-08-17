@@ -41,13 +41,36 @@ public class View implements GameView {
 
   @Override
   public void printTopCardInPile(Card c) {
-    writeMessage("     " + c.getSuit() + c.getValue() + " \n");
+    writeMessage("                    ------- \n" +
+                 "                    |     | \n" +
+            "                    | " + c.getSuit() + c.getValue() + "  | \n" +
+                 "                    |     | \n" +
+                 "                    ------- \n");
+  }
+
+  private void printCardOutline(int numCards, String pattern) {
+    for (int i = 0; i < numCards; i++) {
+      writeMessage(pattern);
+    }
+    if (numCards > 1) {
+      writeMessage("\n");
+    }
   }
 
   @Override
   public void printPlayerHand(List<Card> hand) {
+    printCardOutline(hand.size(), "------- ");
+    printCardOutline(hand.size(), "|     | ");
     for (Card c : hand) {
-      writeMessage(c.getSuit() + c.getValue() + " ");
+      printCardOutline(1, "| " + c.getSuit() + c.getValue() + "  | ");
     }
+    writeMessage("\n");
+    printCardOutline(hand.size(), "|     | ");
+    printCardOutline(hand.size(), "------- ");
+  }
+
+  @Override
+  public void printPlayerTurn() {
+    writeMessage("What card will you like to play? ");
   }
 }

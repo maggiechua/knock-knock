@@ -18,6 +18,7 @@ import View.GameView;
 import Controller.GameController;
 import Model.Player;
 import Model.Card;
+import Model.CardDeck;
 
 public class ModelTest {
   private GameModel model;
@@ -34,11 +35,12 @@ public class ModelTest {
             "8 of hearts)");
     baseRules.put(new Card("any", "A"), "skip the next player's turn");
     baseRules.put(new Card("any", "7"), "reverse direction");
+    CardDeck cardDeck = new CardDeck(2);
     List<Player> players = new ArrayList<>(Arrays.asList(
-            new Player("Player 1", new ArrayList<Card>()),
-            new Player("Player 2", new ArrayList<Card>()),
-            new Player("Player 3", new ArrayList<Card>()),
-            new Player("Player 4", new ArrayList<Card>())
+            new Player("Player 1", new ArrayList<Card>(), cardDeck),
+            new Player("Player 2", new ArrayList<Card>(), cardDeck),
+            new Player("Player 3", new ArrayList<Card>(), cardDeck),
+            new Player("Player 4", new ArrayList<Card>(), cardDeck)
     ));
     model = new Model(players, baseRules);
     view = new ViewMock();
@@ -52,6 +54,7 @@ public class ModelTest {
    */
   @Test
   public void testGenerateHandsWithOneDeck() {
-    model.generateHands(new Random(20));
+    model.generateHands();
+
   }
 }
