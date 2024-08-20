@@ -5,6 +5,10 @@ import java.util.List;
 
 import Model.Card;
 
+/**
+ * The following class represents the View for a text-based Knock-Knock game, consisting of
+ * print methods to display updates during gameplay. 
+ */
 public class View implements GameView {
   private Appendable ap;
 
@@ -12,6 +16,12 @@ public class View implements GameView {
     this.ap = ap;
   }
 
+  /**
+   * The writeMessage() method is used to print text to the console, displaying updates to the
+   * game for the player.
+   * @param message the given message to display represented as a String
+   * @throws IllegalStateException if an invalid message is given
+   */
   private void writeMessage(String message) throws IllegalStateException {
     try {
       ap.append(message);
@@ -48,6 +58,11 @@ public class View implements GameView {
                  "                    ------- \n");
   }
 
+  /**
+   * The printCardOutline() method is used to display a player's hand in a nice format.
+   * @param numCards the number of cards to print represented as Integer
+   * @param pattern the given pattern to print represented as a String
+   */
   private void printCardOutline(int numCards, String pattern) {
     for (int i = 0; i < numCards; i++) {
       writeMessage(pattern);
@@ -71,6 +86,7 @@ public class View implements GameView {
 
   @Override
   public void printPlayerTurn() {
-    writeMessage("What card will you like to play? ");
+    writeMessage("What card will you like to play? Enter the suit (D, C, H, S) followed by " +
+            "its value (i.e. D9): ");
   }
 }

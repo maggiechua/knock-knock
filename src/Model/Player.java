@@ -39,4 +39,20 @@ public class Player {
       numCards++;
     }
   }
+
+  /**
+   * The addCard() method adds the given Card object to the player's hand.
+   * @param c the given Card
+   */
+  public void addCard(Card c) {
+    hand.add(c);
+  }
+
+  /**
+   * The removeCard() method removes the given Card object from the player's hand.
+   * @param c the given Card
+   */
+  public void removeCard(Card c) {
+    hand.remove(c);
+  }
 }

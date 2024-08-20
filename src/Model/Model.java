@@ -2,10 +2,9 @@ package Model;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
- * The following class represents the Model of the Knock Knock Game, consisting of the current
+ * The following class represents the Model of the Knock-Knock Game, consisting of the current
  * list of players in the game and the rules for the round.
  */
 public class Model implements GameModel {
@@ -13,6 +12,13 @@ public class Model implements GameModel {
   private Map<Card, String> rules;
   private CardDeck cardDeck;
 
+  /**
+   * The Model constructor takes in a list of players, a map representing a card and its
+   * corresponding rules, and a CardDeck object which represents the cards in play.
+   * @param players a List representation of players in the game
+   * @param rules a Map representation of the rules depending on the card
+   * @param cardDeck a CardDeck object representing cards in play
+   */
   public Model(List<Player> players, Map<Card, String> rules, CardDeck cardDeck) {
     this.players = players;
     this.rules = rules;
@@ -54,8 +60,8 @@ public class Model implements GameModel {
   }
 
   @Override
-  public List<Card> getHand() {
-    return players.get(0).getPlayerHand();
+  public List<Card> getHand(int player) {
+    return players.get(player - 1).getPlayerHand();
   }
 
   @Override
@@ -65,6 +71,6 @@ public class Model implements GameModel {
 
   @Override
   public boolean canPlayCard(String card) {
-    return false;
+    return cardDeck.checkPlay(card);
   }
 }
