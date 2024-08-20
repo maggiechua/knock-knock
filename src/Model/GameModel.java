@@ -25,7 +25,7 @@ public interface GameModel {
    */
   void generateHands();
 
-  List<Card> getHand();
+  List<Card> getHand(int player);
 
   void updateHand(String card);
 

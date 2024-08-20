@@ -31,23 +31,23 @@ public class CardDeck {
     this.drawPile = new LinkedList<Card>();
     this.numDecks = numDecks;
     this.invalidStartingCards = new ArrayList<Card>(Arrays.asList(
-            new Card("C", "J"),
-            new Card("D", "2"),
-            new Card("D", "8"),
-            new Card("D", "A"),
-            new Card("D", "7"),
-            new Card("C", "2"),
-            new Card("C", "8"),
-            new Card("C", "A"),
-            new Card("C", "7"),
-            new Card("H", "2"),
-            new Card("H", "8"),
-            new Card("H", "A"),
-            new Card("H", "7"),
-            new Card("S", "2"),
-            new Card("S", "8"),
-            new Card("S", "A"),
-            new Card("S", "7")
+            new Card("♣", "J"),
+            new Card("◆", "2"),
+            new Card("◆", "8"),
+            new Card("◆", "A"),
+            new Card("◆", "7"),
+            new Card("♣", "2"),
+            new Card("♣", "8"),
+            new Card("♣", "A"),
+            new Card("♣", "7"),
+            new Card("♥", "2"),
+            new Card("♥", "8"),
+            new Card("♥", "A"),
+            new Card("♥", "7"),
+            new Card("♠", "2"),
+            new Card("♠", "8"),
+            new Card("♠", "A"),
+            new Card("♠", "7")
     ));
     generateDeck();
   }
@@ -73,6 +73,18 @@ public class CardDeck {
   }
 
   /**
+   * The checkPlay() method determines if the given card can be played based on the top card in
+   * the pile.
+   * @param card the given Card object
+   * @return True if the given card is a valid play; False if otherwise
+   */
+  public boolean checkPlay (String card) {
+    Card topCard = cards.get(cards.size() - 1);
+    Card given = new Card(card.charAt(0) + "", card.charAt(1) + "");
+    return topCard.getSuit().equals(given.getSuit()) || topCard.getValue().equals(given.getValue());
+  }
+
+  /**
    * The generateStartingCard() method provides a valid starting card for the game.
    * @return a valid starting Card
    */
@@ -93,8 +105,10 @@ public class CardDeck {
    * @return True if it is a valid starting card; False if otherwise
    */
   private boolean validStartingCard(Card c) {
-    if (invalidStartingCards.contains(c)) {
-      return false;
+    for (Card comp : invalidStartingCards) {
+      if (c.getSuit().equals(comp.getSuit()) && c.getValue().equals(comp.getValue())) {
+        return false;
+      }
     }
     return true;
   }
@@ -137,60 +151,60 @@ public class CardDeck {
    * duplicates based on the number of players for the game.
    */
   private void populate() {
-    cards.add(new Card("D", "A"));
-    cards.add(new Card("D", "2"));
-    cards.add(new Card("D", "3"));
-    cards.add(new Card("D", "4"));
-    cards.add(new Card("D", "5"));
-    cards.add(new Card("D", "6"));
-    cards.add(new Card("D", "7"));
-    cards.add(new Card("D", "8"));
-    cards.add(new Card("D", "9"));
-    cards.add(new Card("D", "10"));
-    cards.add(new Card("D", "J"));
-    cards.add(new Card("D", "Q"));
-    cards.add(new Card("D", "K"));
+    cards.add(new Card("◆", "A"));
+    cards.add(new Card("◆", "2"));
+    cards.add(new Card("◆", "3"));
+    cards.add(new Card("◆", "4"));
+    cards.add(new Card("◆", "5"));
+    cards.add(new Card("◆", "6"));
+    cards.add(new Card("◆", "7"));
+    cards.add(new Card("◆", "8"));
+    cards.add(new Card("◆", "9"));
+    cards.add(new Card("◆", "10"));
+    cards.add(new Card("◆", "J"));
+    cards.add(new Card("◆", "Q"));
+    cards.add(new Card("◆", "K"));
 
-    cards.add(new Card("C", "A"));
-    cards.add(new Card("C", "2"));
-    cards.add(new Card("C", "3"));
-    cards.add(new Card("C", "4"));
-    cards.add(new Card("C", "5"));
-    cards.add(new Card("C", "6"));
-    cards.add(new Card("C", "7"));
-    cards.add(new Card("C", "8"));
-    cards.add(new Card("C", "9"));
-    cards.add(new Card("C", "10"));
-    cards.add(new Card("C", "J"));
-    cards.add(new Card("C", "Q"));
-    cards.add(new Card("C", "K"));
+    cards.add(new Card("♣", "A"));
+    cards.add(new Card("♣", "2"));
+    cards.add(new Card("♣", "3"));
+    cards.add(new Card("♣", "4"));
+    cards.add(new Card("♣", "5"));
+    cards.add(new Card("♣", "6"));
+    cards.add(new Card("♣", "7"));
+    cards.add(new Card("♣", "8"));
+    cards.add(new Card("♣", "9"));
+    cards.add(new Card("♣", "10"));
+    cards.add(new Card("♣", "J"));
+    cards.add(new Card("♣", "Q"));
+    cards.add(new Card("♣", "K"));
 
-    cards.add(new Card("H", "A"));
-    cards.add(new Card("H", "2"));
-    cards.add(new Card("H", "3"));
-    cards.add(new Card("H", "4"));
-    cards.add(new Card("H", "5"));
-    cards.add(new Card("H", "6"));
-    cards.add(new Card("H", "7"));
-    cards.add(new Card("H", "8"));
-    cards.add(new Card("H", "9"));
-    cards.add(new Card("H", "10"));
-    cards.add(new Card("H", "J"));
-    cards.add(new Card("H", "Q"));
-    cards.add(new Card("H", "K"));
+    cards.add(new Card("♥", "A"));
+    cards.add(new Card("♥", "2"));
+    cards.add(new Card("♥", "3"));
+    cards.add(new Card("♥", "4"));
+    cards.add(new Card("♥", "5"));
+    cards.add(new Card("♥", "6"));
+    cards.add(new Card("♥", "7"));
+    cards.add(new Card("♥", "8"));
+    cards.add(new Card("♥", "9"));
+    cards.add(new Card("♥", "10"));
+    cards.add(new Card("♥", "J"));
+    cards.add(new Card("♥", "Q"));
+    cards.add(new Card("♥", "K"));
 
-    cards.add(new Card("S", "A"));
-    cards.add(new Card("S", "2"));
-    cards.add(new Card("S", "3"));
-    cards.add(new Card("S", "4"));
-    cards.add(new Card("S", "5"));
-    cards.add(new Card("S", "6"));
-    cards.add(new Card("S", "7"));
-    cards.add(new Card("S", "8"));
-    cards.add(new Card("S", "9"));
-    cards.add(new Card("S", "10"));
-    cards.add(new Card("S", "J"));
-    cards.add(new Card("S", "Q"));
-    cards.add(new Card("S", "K"));
+    cards.add(new Card("♠", "A"));
+    cards.add(new Card("♠", "2"));
+    cards.add(new Card("♠", "3"));
+    cards.add(new Card("♠", "4"));
+    cards.add(new Card("♠", "5"));
+    cards.add(new Card("♠", "6"));
+    cards.add(new Card("♠", "7"));
+    cards.add(new Card("♠", "8"));
+    cards.add(new Card("♠", "9"));
+    cards.add(new Card("♠", "10"));
+    cards.add(new Card("♠", "J"));
+    cards.add(new Card("♠", "Q"));
+    cards.add(new Card("♠", "K"));
   }
 }
