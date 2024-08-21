@@ -4,6 +4,9 @@ import java.util.List;
 
 import Model.Card;
 
+/**
+ *
+ */
 public interface GameView {
   /**
    * The welcomeMessage() method is used to display a welcome message to the user when
@@ -29,5 +32,9 @@ public interface GameView {
    */
   void printPlayerHand(List<Card> hand);
 
-  void printPlayerTurn();
+  /**
+   * The printPlayerTurn() method is used to print the prompt message for the next player's
+   * turn.
+   */
+  void printPlayerTurn(String player);
 }

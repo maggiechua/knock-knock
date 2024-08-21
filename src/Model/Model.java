@@ -65,8 +65,10 @@ public class Model implements GameModel {
   }
 
   @Override
-  public void updateHand(String card) {
+  public void updateHand(String card, int player) {
 
+//    cardDeck.addPlayedCard(card);
+    players.get(player - 1).removeCard(card);
   }
 
   @Override

@@ -12,6 +12,10 @@ import Model.Card;
 public class View implements GameView {
   private Appendable ap;
 
+  /**
+   *
+   * @param ap
+   */
   public View(Appendable ap) {
     this.ap = ap;
   }
@@ -77,7 +81,12 @@ public class View implements GameView {
     printCardOutline(hand.size(), "------- ");
     printCardOutline(hand.size(), "|     | ");
     for (Card c : hand) {
-      printCardOutline(1, "| " + c.getSuit() + c.getValue() + "  | ");
+      if (c.getValidPlay()) {
+        printCardOutline(1, "| " + c.getSuit() + c.getValue() + "* | ");
+      }
+      else {
+        printCardOutline(1, "| " + c.getSuit() + c.getValue() + "  | ");
+      }
     }
     writeMessage("\n");
     printCardOutline(hand.size(), "|     | ");
@@ -85,8 +94,9 @@ public class View implements GameView {
   }
 
   @Override
-  public void printPlayerTurn() {
-    writeMessage("What card will you like to play? Enter the suit (D, C, H, S) followed by " +
+  public void printPlayerTurn(String player) {
+    writeMessage("What card will you like to play, Player " + player +
+            "? Enter the suit (D, C, H, S) followed by " +
             "its value (i.e. D9): ");
   }
 }

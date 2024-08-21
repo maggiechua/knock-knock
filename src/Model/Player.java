@@ -24,7 +24,12 @@ public class Player {
     this.deck = deck;
   }
 
+  /**
+   *
+   * @return
+   */
   public List<Card> getPlayerHand() {
+    validPlays();
     return this.hand;
   }
 
@@ -41,18 +46,48 @@ public class Player {
   }
 
   /**
-   * The addCard() method adds the given Card object to the player's hand.
-   * @param c the given Card
+   * The validPlays() method modifies the cards in a hand to determine if a card can be played
+   * for the next turn.
    */
-  public void addCard(Card c) {
-    hand.add(c);
+  public void validPlays() {
+    for (Card c : hand) {
+      if (deck.checkPlay(c.getSuit() + c.getValue())) {
+        c.makeValidPlay();
+      }
+    }
+  }
+
+  /**
+   * The addCard() method adds the given Card object to the player's hand.
+   */
+  public void addCard() {
+    hand.add(deck.drawCard());
   }
 
   /**
    * The removeCard() method removes the given Card object from the player's hand.
-   * @param c the given Card
+   * @param c the given card represented as a String
    */
-  public void removeCard(Card c) {
-    hand.remove(c);
+  public void removeCard(String c) {
+    Card convertCard = convertToCard(c);
+    deck.addPlayedCard(convertCard);
+    hand.remove(convertCard);
+  }
+
+  /**
+   * The convertToCard() method finds the String representation of the given card in the player's
+   * hand and returns it.
+   * @param card the given String representation of the card
+   * @return a Card object
+   */
+  private Card convertToCard(String card) {
+    Card matchingCard = null;
+    for (Card c : hand) {
+      if (c.getSuit().equals(deck.convertSuit(card.charAt(0) + ""))
+        && c.getValue().equals(card.substring(1))) {
+          matchingCard = c;
+      }
+    }
+    return matchingCard;
   }
 }

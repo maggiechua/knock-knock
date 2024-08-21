@@ -7,6 +7,7 @@ package Model;
 public class Card {
   private final String suit;
   private final String value;
+  private boolean validPlay;
 
   /**
    * The Card constructor consists of a suit (Diamond, Club, Heart, Spade) and its value (1 to 10
@@ -17,6 +18,7 @@ public class Card {
   public Card(String suit, String value) {
     this.suit = suit;
     this.value = value;
+    this.validPlay = false;
   }
 
   public String getSuit() {
@@ -26,4 +28,10 @@ public class Card {
   public String getValue() {
     return this.value;
   }
+
+  public boolean getValidPlay() { return this.validPlay; }
+
+  public void makeValidPlay() { this.validPlay = true; }
+
+  public void resetValidPlay() { this.validPlay = false; }
 }

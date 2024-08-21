@@ -27,7 +27,7 @@ public class ViewMock implements GameView {
   }
 
   @Override
-  public void printPlayerTurn() {
+  public void printPlayerTurn(String player) {
 
   }
 }
