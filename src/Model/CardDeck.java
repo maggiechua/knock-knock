@@ -53,6 +53,14 @@ public class CardDeck {
   }
 
   /**
+   * The getTopCardInPile() retrieves the top card in the played pile.
+   * @return a Card object
+   */
+  public Card getTopCardInPile() {
+    return cards.get(cards.size() - 1);
+  }
+
+  /**
    * The drawCard() method returns the first card in the drawingPile queue
    * @return a Card object
    */
@@ -66,7 +74,7 @@ public class CardDeck {
   /**
    * The addPlayedCard() method adds the given valid card played by the player and adds it to the
    * pile.
-   * @param c the given Card object
+   * @param c the given card represented as a String
    */
   public void addPlayedCard(Card c) {
     cards.add(c);
@@ -79,8 +87,9 @@ public class CardDeck {
    * @return True if the given card is a valid play; False if otherwise
    */
   public boolean checkPlay (String card) {
-    Card topCard = cards.get(cards.size() - 1);
-    Card given = new Card(card.charAt(0) + "", card.charAt(1) + "");
+    Card topCard = getTopCardInPile();
+    String suit = convertSuit(card.charAt(0) + "");
+    Card given = new Card(suit, card.charAt(1) + "");
     return topCard.getSuit().equals(given.getSuit()) || topCard.getValue().equals(given.getValue());
   }
 
@@ -90,7 +99,9 @@ public class CardDeck {
    */
   public Card generateStartingCard() {
     if (validStartingCard(drawPile.peek())) {
-      return drawCard();
+      Card topCard = drawCard();
+      addPlayedCard(topCard);
+      return topCard;
     }
     else {
       addPlayedCard(drawCard());
@@ -143,6 +154,30 @@ public class CardDeck {
   private void setUpDrawPile() {
     for (Card c : cards) {
       drawPile.offer(c);
+    }
+  }
+
+  /**
+   * The convertSuit() converts the given String representation of a suit (D, C, H, S) to
+   * (◆ ♣ ♥ ♠)
+   * @param s the given suit represented as a String
+   * @return the converted suit to the String
+   */
+  public String convertSuit(String s) {
+    if (s.equals("D")) {
+      return "◆";
+    }
+    else if (s.equals("C")) {
+      return "♣";
+    }
+    else if (s.equals("H")) {
+      return "♥";
+    }
+    else if (s.equals("S")) {
+      return "♠";
+    }
+    else {
+      return s;
     }
   }
 

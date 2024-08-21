@@ -36,12 +36,19 @@ public class Controller implements GameController {
   @Override
   public void execute() {
     // Setup of the Game
-    int currentPlayer = 0;
-    boolean endGame = false;
-    Scanner sc = new Scanner(rd);
     view.welcomeMessage();
     model.generateHands();
+    basicGameplay(false, 0);
+  }
 
+  /**
+   * The basicGameplay() method is used to start the game and update it as players make their
+   * moves until only one person is left with cards in their hand.
+   * @param endGame a Boolean representation of whether the game has ended
+   * @param currentPlayer an Integer representation of which player's turn it is
+   */
+  private void basicGameplay(boolean endGame, int currentPlayer) {
+//    Scanner sc = new Scanner(rd);
     // Basic Gameplay - Display Hand, Play Card, Valid -> Continue | Invalid -> Ask Again
     // Special Feature - makes bold the cards that the player can play
     while (!endGame) {
@@ -51,10 +58,8 @@ public class Controller implements GameController {
       }
       else {
         view.printPlayerHand(model.getHand(currentPlayer));
-        view.printPlayerTurn();
-        String nextPlay = sc.next();
-        model.canPlayCard(nextPlay);
-
+        view.printPlayerTurn(Integer.toString(currentPlayer));
+        playCard(Integer.toString(currentPlayer));
         if (currentPlayer == 4) {
           currentPlayer = 1;
         }
@@ -63,7 +68,24 @@ public class Controller implements GameController {
         }
       }
     }
+  }
 
-
+  /**
+   * The playCard() method is used during a player's turn where a player selects a card in their
+   * hand to play and the request is granted it valid, otherwise, they are prompted to choose a
+   * different valid card, or forced to draw a card.
+   * @param player representation of the current player's turn as a String
+   */
+  private void playCard(String player) {
+    Scanner sc = new Scanner(rd);
+    String nextPlay = sc.next();
+    if (model.canPlayCard(nextPlay)) {
+      model.updateHand(nextPlay, Integer.parseInt(player));
+      view.printPlayerHand(model.getHand(Integer.parseInt(player)));
+    }
+    else {
+      view.printPlayerTurn(player);
+      playCard(player);
+    }
   }
 }
