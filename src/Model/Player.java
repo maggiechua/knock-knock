@@ -29,8 +29,21 @@ public class Player {
    * @return
    */
   public List<Card> getPlayerHand() {
-    validPlays();
+    markValidPlays();
     return this.hand;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public boolean containsValidPlays() {
+    for (Card c : hand) {
+      if (c.getValidPlay()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -46,10 +59,10 @@ public class Player {
   }
 
   /**
-   * The validPlays() method modifies the cards in a hand to determine if a card can be played
+   * The markValidPlays() method modifies the cards in a hand to determine if a card can be played
    * for the next turn.
    */
-  public void validPlays() {
+  public void markValidPlays() {
     for (Card c : hand) {
       if (deck.checkPlay(c.getSuit() + c.getValue())) {
         c.makeValidPlay();
@@ -58,10 +71,13 @@ public class Player {
   }
 
   /**
-   * The addCard() method adds the given Card object to the player's hand.
+   * The addCard() method adds a given number of cards to the player's hand from the card deck.
+   * @param numCards an Integer representation of the number of cards to add to the deck
    */
-  public void addCard() {
-    hand.add(deck.drawCard());
+  public void addCard(int numCards) {
+    for (int i = 1; i <= numCards; i++) {
+      hand.add(deck.drawCard());
+    }
   }
 
   /**

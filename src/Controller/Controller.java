@@ -48,24 +48,28 @@ public class Controller implements GameController {
    * @param currentPlayer an Integer representation of which player's turn it is
    */
   private void basicGameplay(boolean endGame, int currentPlayer) {
-//    Scanner sc = new Scanner(rd);
-    // Basic Gameplay - Display Hand, Play Card, Valid -> Continue | Invalid -> Ask Again
-    // Special Feature - makes bold the cards that the player can play
     while (!endGame) {
       if (currentPlayer == 0) {
-        view.printTopCardInPile(model.generateStartingCard());
+        model.getTopCardInPile(true);
         currentPlayer++;
       }
+//      else if (!model.hasValidPlays(currentPlayer)) {
+//        model.drawCards(1, currentPlayer);
+//        view.printPlayerHand(model.getHand(currentPlayer));
+//        view.printNoValidPlays(currentPlayer);
+//      }
       else {
+        // must reset valid plays after a card is chosen
+        view.printTopCardInPile(model.getTopCardInPile(false));
         view.printPlayerHand(model.getHand(currentPlayer));
         view.printPlayerTurn(Integer.toString(currentPlayer));
         playCard(Integer.toString(currentPlayer));
-        if (currentPlayer == 4) {
-          currentPlayer = 1;
-        }
-        else {
-          currentPlayer++;
-        }
+      }
+      if (currentPlayer == 4) {
+        currentPlayer = 1;
+      }
+      else {
+        currentPlayer++;
       }
     }
   }
@@ -81,10 +85,9 @@ public class Controller implements GameController {
     String nextPlay = sc.next();
     if (model.canPlayCard(nextPlay)) {
       model.updateHand(nextPlay, Integer.parseInt(player));
-      view.printPlayerHand(model.getHand(Integer.parseInt(player)));
     }
     else {
-      view.printPlayerTurn(player);
+      view.printInvalidPlay();
       playCard(player);
     }
   }

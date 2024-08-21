@@ -99,4 +99,15 @@ public class View implements GameView {
             "? Enter the suit (D, C, H, S) followed by " +
             "its value (i.e. D9): ");
   }
+
+  @Override
+  public void printInvalidPlay() {
+    writeMessage("The chosen card cannot be played. Please select again: ");
+  }
+
+  @Override
+  public void printNoValidPlays(int player) {
+    writeMessage("There were no valid cards that could be played. A card was drawn and added " +
+            "to your hand, player " + player + ". \n");
+  }
 }

@@ -37,4 +37,17 @@ public interface GameView {
    * turn.
    */
   void printPlayerTurn(String player);
+
+  /**
+   * The printInvalidPlay() method is used to print a message informing the player that they
+   * have chosen a card that cannot be played, so they must select again.
+   */
+  void printInvalidPlay();
+
+  /**
+   * The printNoValidPlays() method is used to display a message letting the player know that
+   * none of the cards in their hand can be played, so a card was drawn and added to their hand.
+   * @param player an Integer representation of the given player
+   */
+  void printNoValidPlays(int player);
 }
