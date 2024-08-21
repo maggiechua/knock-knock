@@ -48,8 +48,13 @@ public class Model implements GameModel {
   }
 
   @Override
-  public Card generateStartingCard() {
-    return cardDeck.generateStartingCard();
+  public Card getTopCardInPile(boolean startingCard) {
+    if (startingCard) {
+      return cardDeck.generateStartingCard();
+    }
+    else {
+      return cardDeck.getTopCardInPile();
+    }
   }
 
   @Override
@@ -60,15 +65,23 @@ public class Model implements GameModel {
   }
 
   @Override
+  public boolean hasValidPlays(int player) {
+    return players.get(player - 1).containsValidPlays();
+  }
+
+  @Override
   public List<Card> getHand(int player) {
     return players.get(player - 1).getPlayerHand();
   }
 
   @Override
   public void updateHand(String card, int player) {
-
-//    cardDeck.addPlayedCard(card);
     players.get(player - 1).removeCard(card);
+  }
+
+  @Override
+  public void drawCards(int numCards, int player) {
+    players.get(player - 1).addCard(numCards);
   }
 
   @Override
