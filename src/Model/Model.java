@@ -70,6 +70,16 @@ public class Model implements GameModel {
   }
 
   @Override
+  public void resetValidPlays(int player) {
+    players.get(player - 1).resetPlays();
+  }
+
+  @Override
+  public String checkSpecialCard(Card c) {
+    return cardDeck.specialCard(c);
+  }
+
+  @Override
   public List<Card> getHand(int player) {
     return players.get(player - 1).getPlayerHand();
   }

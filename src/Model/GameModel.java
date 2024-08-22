@@ -48,6 +48,14 @@ public interface GameModel {
   boolean hasValidPlays(int player);
 
   /**
+   *
+   * @param player
+   */
+  void resetValidPlays(int player);
+
+  String checkSpecialCard(Card c);
+
+  /**
    * The updateHand() method is used to update a given player's hand when they play a card on
    * their turn or have to draw a card.
    * @param card

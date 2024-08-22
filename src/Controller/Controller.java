@@ -38,7 +38,7 @@ public class Controller implements GameController {
     // Setup of the Game
     view.welcomeMessage();
     model.generateHands();
-    basicGameplay(false, 0);
+    basicGameplay(false, 1);
   }
 
   /**
@@ -48,29 +48,44 @@ public class Controller implements GameController {
    * @param currentPlayer an Integer representation of which player's turn it is
    */
   private void basicGameplay(boolean endGame, int currentPlayer) {
+    // Cases:
+    // - game just started -> determine starting card [X]
+    // - player has no valid cards they can play -> draw card + move to next player [X]
+    // - player has valid cards they can play -> ask them to select and add their card to pile
+    //   - normal card -> add to pile and move to next player [X]
+    //   - only have two remaining cards -> check if they 'say'
+    //   'Knock-Knock' (if yes, remind other players; no, force player to draw another card)
+    //   - place a special card (A, 2) -> must skip next player accordingly and force them to draw
+    //   the required number of cards
+    //   - place a special card (7) -> change direction of game, so player's turns go other way
+    //   - place a special card (8) -> ask player what suit they would like to change game to
+    // - player has played their last card -> depending on game, once first person runs out, they
+    //   automatically win; otherwise, keep playing until only one person left with cards
+    model.getTopCardInPile(true);
     while (!endGame) {
-      if (currentPlayer == 0) {
-        model.getTopCardInPile(true);
-        currentPlayer++;
+      view.printTopCardInPile(model.getTopCardInPile(false));
+//      view.printPlayerHand(model.getHand(currentPlayer));
+      if (!model.hasValidPlays(currentPlayer)) {
+        model.drawCards(1, currentPlayer);
+        view.printNoValidPlays(currentPlayer);
+        view.printPlayerHand(model.getHand(currentPlayer));
       }
-//      else if (!model.hasValidPlays(currentPlayer)) {
-//        model.drawCards(1, currentPlayer);
-//        view.printPlayerHand(model.getHand(currentPlayer));
-//        view.printNoValidPlays(currentPlayer);
-//      }
       else {
-        // must reset valid plays after a card is chosen
-        view.printTopCardInPile(model.getTopCardInPile(false));
         view.printPlayerHand(model.getHand(currentPlayer));
         view.printPlayerTurn(Integer.toString(currentPlayer));
         playCard(Integer.toString(currentPlayer));
+        model.resetValidPlays(currentPlayer);
       }
-      if (currentPlayer == 4) {
+      // check special cards
+      String value = model.checkSpecialCard(model.getTopCardInPile(false)); // A J 2 | 7 8
+      // probably will have to use deques for this to work??
+      if (currentPlayer == 2) {
         currentPlayer = 1;
       }
       else {
         currentPlayer++;
       }
+      specialCardPlayed(value, currentPlayer);
     }
   }
 
@@ -91,4 +106,33 @@ public class Controller implements GameController {
       playCard(player);
     }
   }
+
+  /**
+   *
+   * @param value
+   * @param player
+   */
+  private void specialCardPlayed(String value, int player) {
+    if (value.equals("J")) {
+      model.drawCards(7, player);
+    }
+    else if (value.equals("2")) {
+      model.drawCards(2, player);
+    }
+    else if (value.equals("8")) {
+      // ask for suit
+    }
+    else if (value.equals("7")) {
+      // reverse direction
+    }
+  }
+
+  // use deques for updating players instead? so things are linked??
+  // implement command-design pattern??
+//  static class SkipCardCommand implements PlayCommand {
+//    @Override
+//    public void execute() {
+//
+//    }
+//  }
 }
