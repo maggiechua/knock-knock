@@ -19,7 +19,7 @@ public class CardDeck {
   private List<Card> cards;
   private Queue<Card> drawPile;
   private int numDecks;
-  private List<Card> invalidStartingCards;
+  private List<Card> specialCards;
 
   /**
    * The CardDeck constructor is an object that represents the cards in circulation for the current
@@ -30,7 +30,7 @@ public class CardDeck {
     this.cards = new ArrayList<Card>();
     this.drawPile = new LinkedList<Card>();
     this.numDecks = numDecks;
-    this.invalidStartingCards = new ArrayList<Card>(Arrays.asList(
+    this.specialCards = new ArrayList<Card>(Arrays.asList(
             new Card("♣", "J"),
             new Card("◆", "2"),
             new Card("◆", "8"),
@@ -94,6 +94,20 @@ public class CardDeck {
   }
 
   /**
+   *
+   * @param c
+   * @return
+   */
+  public String specialCard(Card c) {
+    if (!specialCards.contains(c)) {
+      return "";
+    }
+    else {
+      return c.getValue();
+    }
+  }
+
+  /**
    * The generateStartingCard() method provides a valid starting card for the game.
    * @return a valid starting Card
    */
@@ -116,7 +130,7 @@ public class CardDeck {
    * @return True if it is a valid starting card; False if otherwise
    */
   private boolean validStartingCard(Card c) {
-    for (Card comp : invalidStartingCards) {
+    for (Card comp : specialCards) {
       if (c.getSuit().equals(comp.getSuit()) && c.getValue().equals(comp.getValue())) {
         return false;
       }

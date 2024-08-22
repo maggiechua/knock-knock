@@ -38,12 +38,15 @@ public class Player {
    * @return
    */
   public boolean containsValidPlays() {
+    boolean valid = false;
+    markValidPlays();
     for (Card c : hand) {
       if (c.getValidPlay()) {
-        return true;
+        valid = true;
+        break;
       }
     }
-    return false;
+    return valid;
   }
 
   /**
@@ -67,6 +70,15 @@ public class Player {
       if (deck.checkPlay(c.getSuit() + c.getValue())) {
         c.makeValidPlay();
       }
+    }
+  }
+
+  /**
+   *
+   */
+  public void resetPlays() {
+    for (Card c : hand) {
+      c.resetValidPlay();
     }
   }
 
