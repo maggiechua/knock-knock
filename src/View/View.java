@@ -56,9 +56,14 @@ public class View implements GameView {
   @Override
   public void printTopCardInPile(Card c) {
     writeMessage("                    ------- \n" +
-                 "                    |     | \n" +
-            "                    | " + c.getSuit() + c.getValue() + "  | \n" +
-                 "                    |     | \n" +
+                 "                    |     | \n");
+    if (c.getValue().equals("10")) {
+      writeMessage("                    | " + c.getSuit() + c.getValue() + " | \n" );
+    }
+    else {
+      writeMessage("                    | " + c.getSuit() + c.getValue() + "  | \n" );
+    }
+    writeMessage("                    |     | \n" +
                  "                    ------- \n");
   }
 
@@ -82,10 +87,20 @@ public class View implements GameView {
     printCardOutline(hand.size(), "|     | ");
     for (Card c : hand) {
       if (c.getValidPlay()) {
-        printCardOutline(1, "| " + c.getSuit() + c.getValue() + "* | ");
+        if (c.getValue().equals("10")) {
+          printCardOutline(1, "| " + c.getSuit() + c.getValue() + "*| ");
+        }
+        else {
+          printCardOutline(1, "| " + c.getSuit() + c.getValue() + "* | ");
+        }
       }
       else {
-        printCardOutline(1, "| " + c.getSuit() + c.getValue() + "  | ");
+        if (c.getValue().equals("10")) {
+          printCardOutline(1, "| " + c.getSuit() + c.getValue() + " | ");
+        }
+        else {
+          printCardOutline(1, "| " + c.getSuit() + c.getValue() + "  | ");
+        }
       }
     }
     writeMessage("\n");
@@ -112,7 +127,25 @@ public class View implements GameView {
   }
 
   @Override
+  public void printDrawCards(String player, String sc) {
+    writeMessage("As a " + sc + " card was just played, two cards were added to your hand " +
+            "and your turn was skipped, " + player + ". \n");
+  }
+
+  @Override
+  public void printReverseDirection(String player) {
+    writeMessage("Reverse, Reverse! The direction has been changed. \n");
+    printPlayerTurn(player);
+  }
+
+  @Override
   public void printPlayerChooseNewSuit(String player) {
     writeMessage(player + ", please type what suit you would like to change to (D, C, H, S): ");
+  }
+
+  @Override
+  public void printSuitChange(String player, String suit) {
+    writeMessage("The suit has been changed to " + suit + ". What card would you like to play, " +
+            player + "?" + " Enter the suit followed by its value (i.e. D9): ");
   }
 }

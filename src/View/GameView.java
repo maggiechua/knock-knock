@@ -35,6 +35,7 @@ public interface GameView {
   /**
    * The printPlayerTurn() method is used to print the prompt message for the next player's
    * turn.
+   * @param player a String representation of the player's name
    */
   void printPlayerTurn(String player);
 
@@ -47,13 +48,34 @@ public interface GameView {
   /**
    * The printNoValidPlays() method is used to display a message letting the player know that
    * none of the cards in their hand can be played, so a card was drawn and added to their hand.
-   * @param player
+   * @param player a String representation of the player's name
    */
   void printNoValidPlays(String player);
 
   /**
+   * The printDrawCards() method is used to display a message letting the given player know that since
+   * a draw 2 special card was played by the previous player, 2 cards have been added to their
+   * hand and their turn is skipped.
+   * @param player a String representation of the player's name
+   */
+  void printDrawCards(String player, String sc);
+
+  /**
    *
-   * @param player
+   * @param player a String representation of the player's name
+   */
+  void printReverseDirection(String player);
+
+  /**
+   *
+   * @param player a String representation of the player's name
    */
   void printPlayerChooseNewSuit(String player);
+
+  /**
+   *
+   * @param player a String representation of the player's name
+   * @param suit a String representation of the new suit
+   */
+  void printSuitChange(String player, String suit);
 }
