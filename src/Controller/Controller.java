@@ -85,6 +85,8 @@ public class Controller implements GameController {
     }
   }
 
+  // make basicGameplay items abstracted into commands as well??
+
   /**
    * The playCard() method is used during a player's turn where a player selects a card in their
    * hand to play and the request is granted it valid, otherwise, they are prompted to choose a
