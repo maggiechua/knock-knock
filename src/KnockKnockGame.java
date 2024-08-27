@@ -32,8 +32,8 @@ public class KnockKnockGame {
     CardDeck cardDeck = new CardDeck(1);
     List<Player> players = new ArrayList<>(Arrays.asList(
             new Player("Player 1", new ArrayList<Card>(), cardDeck),
-            new Player("Player 2", new ArrayList<Card>(), cardDeck)
-//            new Player("Player 3", new ArrayList<Card>(), cardDeck),
+            new Player("Player 2", new ArrayList<Card>(), cardDeck),
+            new Player("Player 3", new ArrayList<Card>(), cardDeck)
 //            new Player("Player 4", new ArrayList<Card>(), cardDeck)
     ));
     GameModel model = new Model(players, baseRules, cardDeck);

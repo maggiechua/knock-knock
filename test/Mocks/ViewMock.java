@@ -42,7 +42,22 @@ public class ViewMock implements GameView {
   }
 
   @Override
+  public void printDrawCards(String player, String sc) {
+
+  }
+
+  @Override
+  public void printReverseDirection(String player) {
+
+  }
+
+  @Override
   public void printPlayerChooseNewSuit(String player) {
+
+  }
+
+  @Override
+  public void printSuitChange(String player, String suit) {
 
   }
 }
