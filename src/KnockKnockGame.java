@@ -4,14 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.*;
+
 import Controller.Controller;
 import Controller.GameController;
+import Controller.GuiController;
 import Model.GameModel;
 import Model.Model;
 import Model.Card;
 import Model.Player;
 import Model.CardDeck;
 import View.GameView;
+import View.GuiView;
 import View.View;
 
 /**
@@ -37,8 +41,22 @@ public class KnockKnockGame {
 //            new Player("Player 4", new ArrayList<Card>(), cardDeck)
     ));
     GameModel model = new Model(players, baseRules, cardDeck);
+    // Text-based game View
     GameView view = new View(System.out);
+    // GUI ver View
+    GuiView.setDefaultLookAndFeelDecorated(false);
+    GuiView guiView = new GuiView();
+    guiView.setVisible(true);
+    guiView.setLocationRelativeTo(null);
+
+    // Text-based game Controller
     GameController controller = new Controller(model, view);
-    controller.execute();
+    // GUI ver Controller
+    GameController guiController = new GuiController(model, view);
+    guiView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    guiView.setVisible(true);
+
+    //controller.execute();
+    guiController.execute();
   }
 }
