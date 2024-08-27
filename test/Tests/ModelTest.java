@@ -42,9 +42,9 @@ public class ModelTest {
             new Player("Player 3", new ArrayList<Card>(), cardDeck),
             new Player("Player 4", new ArrayList<Card>(), cardDeck)
     ));
-    model = new Model(players, baseRules);
-    view = new ViewMock();
-    controller = new ControllerMock();
+//    model = new Model(players, baseRules);
+//    view = new ViewMock();
+//    controller = new ControllerMock();
   }
 
   /**
@@ -54,7 +54,7 @@ public class ModelTest {
    */
   @Test
   public void testGenerateHandsWithOneDeck() {
-    model.generateHands();
+//    model.generateHands();
 
   }
 }

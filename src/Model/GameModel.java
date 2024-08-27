@@ -17,6 +17,8 @@ public interface GameModel {
 
   boolean canModifyRules();
 
+  void setUpOrder();
+
   /**
    * The getTopCardInPile() method is used to retrieve the top card in the middle pile where
    * all cards are played.
@@ -32,26 +34,29 @@ public interface GameModel {
    */
   void generateHands();
 
+
+  Player getNextPlayer(Player current, boolean reverse);
+
   /**
    * The getHand() method is used to retrieve a given player's hand, displaying all the cards
    * they are currently holding and which ones are valid moves.
-   * @param player an Integer representation of the given player
+   * @param p
    * @return a List representation of all Card(s) in a player's hand
    */
-  List<Card> getHand(int player);
+  List<Card> getHand(Player p);
 
   /**
    *
-   * @param player
+   * @param p
    * @return
    */
-  boolean hasValidPlays(int player);
+  boolean hasValidPlays(Player p);
 
   /**
    *
-   * @param player
+   * @param p
    */
-  void resetValidPlays(int player);
+  void resetValidPlays(Player p);
 
   String checkSpecialCard(Card c);
 
@@ -59,16 +64,16 @@ public interface GameModel {
    * The updateHand() method is used to update a given player's hand when they play a card on
    * their turn or have to draw a card.
    * @param card
-   * @param player an Integer representation of the given player
+   * @param p
    */
-  void updateHand(String card, int player);
+  void updateHand(String card, Player p);
 
   /**
    *
    * @param numCards
-   * @param player an Integer representation of the given player
+   * @param p
    */
-  void drawCards(int numCards, int player);
+  void drawCards(int numCards, Player p);
 
   /**
    * The canPlayCard() method is used to determine if a given card can be played based on the

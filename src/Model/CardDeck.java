@@ -95,16 +95,18 @@ public class CardDeck {
 
   /**
    *
-   * @param c
+   * @param c the given Card object
    * @return
    */
   public String specialCard(Card c) {
-    if (!specialCards.contains(c)) {
-      return "";
+    String value = "";
+    for (Card card : specialCards) {
+      if (c.getSuit().equals(card.getSuit()) && c.getValue().equals(card.getValue())) {
+        value = c.getValue();
+        break;
+      }
     }
-    else {
-      return c.getValue();
-    }
+    return value;
   }
 
   /**

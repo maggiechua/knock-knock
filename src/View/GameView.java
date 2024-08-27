@@ -47,7 +47,13 @@ public interface GameView {
   /**
    * The printNoValidPlays() method is used to display a message letting the player know that
    * none of the cards in their hand can be played, so a card was drawn and added to their hand.
-   * @param player an Integer representation of the given player
+   * @param player
    */
-  void printNoValidPlays(int player);
+  void printNoValidPlays(String player);
+
+  /**
+   *
+   * @param player
+   */
+  void printPlayerChooseNewSuit(String player);
 }

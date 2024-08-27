@@ -95,7 +95,7 @@ public class View implements GameView {
 
   @Override
   public void printPlayerTurn(String player) {
-    writeMessage("What card will you like to play, Player " + player +
+    writeMessage("What card will you like to play, " + player +
             "? Enter the suit (D, C, H, S) followed by " +
             "its value (i.e. D9): ");
   }
@@ -106,8 +106,13 @@ public class View implements GameView {
   }
 
   @Override
-  public void printNoValidPlays(int player) {
+  public void printNoValidPlays(String player) {
     writeMessage("There were no valid cards that could be played. A card was drawn and added " +
-            "to your hand, player " + player + ". \n");
+            "to your hand, " + player + ". \n");
+  }
+
+  @Override
+  public void printPlayerChooseNewSuit(String player) {
+    writeMessage(player + ", please type what suit you would like to change to (D, C, H, S): ");
   }
 }
