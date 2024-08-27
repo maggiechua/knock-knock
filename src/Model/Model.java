@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class Model implements GameModel {
   private List<Player> players;
   private Map<Card, String> rules;
   private CardDeck cardDeck;
+  private LinkedList<Player> order;
 
   /**
    * The Model constructor takes in a list of players, a map representing a card and its
@@ -23,6 +25,7 @@ public class Model implements GameModel {
     this.players = players;
     this.rules = rules;
     this.cardDeck = cardDeck;
+    this.order = new LinkedList<Player>();
   }
 
   @Override
@@ -48,6 +51,31 @@ public class Model implements GameModel {
   }
 
   @Override
+  public void setUpOrder() {
+    int numPlayers = players.size();
+    for (int i = 0; i < numPlayers; i++) {
+      Player current = players.get(i);
+      Player next = null;
+      Player prev = null;
+      try {
+        next = players.get(i + 1);
+      }
+      catch (Exception e) {
+        next = players.get(0);
+      }
+      try {
+        prev = players.get(i - 1);
+      }
+      catch (Exception e) {
+        prev = players.get(players.size() - 1);
+      }
+      order.add(current);
+      current.setNextPlayer(next);
+      current.setPrevPlayer(prev);
+    }
+  }
+
+  @Override
   public Card getTopCardInPile(boolean startingCard) {
     if (startingCard) {
       return cardDeck.generateStartingCard();
@@ -65,33 +93,48 @@ public class Model implements GameModel {
   }
 
   @Override
-  public boolean hasValidPlays(int player) {
-    return players.get(player - 1).containsValidPlays();
+  public Player getNextPlayer(Player current, boolean reverse) {
+    if (current == null) {
+      return order.getFirst();
+    }
+    else if (reverse) {
+      return current.getPrevPlayer();
+    }
+    else {
+      return current.getNextPlayer();
+    }
   }
 
   @Override
-  public void resetValidPlays(int player) {
-    players.get(player - 1).resetPlays();
+  public boolean hasValidPlays(Player p) {
+    return p.containsValidPlays();
+  }
+
+  @Override
+  public void resetValidPlays(Player p) {
+    p.resetPlays();
   }
 
   @Override
   public String checkSpecialCard(Card c) {
+    System.out.println(c.getSuit() + " " + c.getValue());
     return cardDeck.specialCard(c);
+    // need to convert the card in order for it work
   }
 
   @Override
-  public List<Card> getHand(int player) {
-    return players.get(player - 1).getPlayerHand();
+  public List<Card> getHand(Player p) {
+    return p.getPlayerHand();
   }
 
   @Override
-  public void updateHand(String card, int player) {
-    players.get(player - 1).removeCard(card);
+  public void updateHand(String card, Player p) {
+    p.removeCard(card);
   }
 
   @Override
-  public void drawCards(int numCards, int player) {
-    players.get(player - 1).addCard(numCards);
+  public void drawCards(int numCards, Player p) {
+    p.addCard(numCards);
   }
 
   @Override

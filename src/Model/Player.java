@@ -10,6 +10,8 @@ public class Player {
   private String name;
   private List<Card> hand;
   private CardDeck deck;
+  private Player next;
+  private Player prev;
 
   /**
    * The Player constructor creates a Player object consisting of the user's username and current
@@ -24,18 +26,47 @@ public class Player {
     this.deck = deck;
   }
 
+  public String getPlayerName() {
+    return this.name;
+  }
+
   /**
-   *
-   * @return
+   * The getPlayerHand() method determines which cards on the player's turn can be
+   * played, marks them, and returns them.
+   * @return the player's hand as a List representation
    */
   public List<Card> getPlayerHand() {
     markValidPlays();
     return this.hand;
   }
 
+  public Player getNextPlayer() {
+    return this.next;
+  }
+
+  public Player getPrevPlayer() {
+    return this.prev;
+  }
+
   /**
    *
-   * @return
+   * @param p
+   */
+  public void setNextPlayer(Player p) {
+    this.next = p;
+  }
+
+  /**
+   *
+   * @param p
+   */
+  public void setPrevPlayer(Player p) {
+    this.prev = p;
+  }
+
+  /**
+   * The containsValidPlays() method determines if the player's hand contains valid plays.
+   * @return True if there is at least one valid play; False otherwise
    */
   public boolean containsValidPlays() {
     boolean valid = false;
@@ -74,7 +105,8 @@ public class Player {
   }
 
   /**
-   *
+   * The resetPlays() method mutates the validPlay variable and resets it back to False
+   * once a player has chosen a valid card to play.
    */
   public void resetPlays() {
     for (Card c : hand) {

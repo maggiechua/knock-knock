@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import Model.GameModel;
+import Model.Player;
 import View.GameView;
 
 /**
@@ -38,54 +39,49 @@ public class Controller implements GameController {
     // Setup of the Game
     view.welcomeMessage();
     model.generateHands();
-    basicGameplay(false, 1);
+    basicGameplay(false);
   }
 
   /**
    * The basicGameplay() method is used to start the game and update it as players make their
    * moves until only one person is left with cards in their hand.
    * @param endGame a Boolean representation of whether the game has ended
-   * @param currentPlayer an Integer representation of which player's turn it is
    */
-  private void basicGameplay(boolean endGame, int currentPlayer) {
+  private void basicGameplay(boolean endGame) {
     // Cases:
     // - game just started -> determine starting card [X]
     // - player has no valid cards they can play -> draw card + move to next player [X]
-    // - player has valid cards they can play -> ask them to select and add their card to pile
+    // - player has valid cards they can play -> ask them to select and add their card to pile []
     //   - normal card -> add to pile and move to next player [X]
     //   - only have two remaining cards -> check if they 'say'
     //   'Knock-Knock' (if yes, remind other players; no, force player to draw another card)
-    //   - place a special card (A, 2) -> must skip next player accordingly and force them to draw
-    //   the required number of cards
-    //   - place a special card (7) -> change direction of game, so player's turns go other way
-    //   - place a special card (8) -> ask player what suit they would like to change game to
+    //   - place a special card (A, 2, J) -> must skip next player accordingly and force them to draw
+    //   the required number of cards []
+    //   - place a special card (2, J) -> requires next player to draw the required number of cards [X]
+    //   - place a special card (7) -> change direction of game, so player's turns go other way []
+    //   - place a special card (8) -> ask player what suit they would like to change game to []
     // - player has played their last card -> depending on game, once first person runs out, they
     //   automatically win; otherwise, keep playing until only one person left with cards
     model.getTopCardInPile(true);
+    model.setUpOrder();
+    Player currentPlayer = model.getNextPlayer(null, false);
     while (!endGame) {
       view.printTopCardInPile(model.getTopCardInPile(false));
-//      view.printPlayerHand(model.getHand(currentPlayer));
       if (!model.hasValidPlays(currentPlayer)) {
         model.drawCards(1, currentPlayer);
-        view.printNoValidPlays(currentPlayer);
+        view.printNoValidPlays(currentPlayer.getPlayerName());
         view.printPlayerHand(model.getHand(currentPlayer));
       }
       else {
         view.printPlayerHand(model.getHand(currentPlayer));
-        view.printPlayerTurn(Integer.toString(currentPlayer));
-        playCard(Integer.toString(currentPlayer));
+        view.printPlayerTurn(currentPlayer.getPlayerName());
+        playCard(currentPlayer);
         model.resetValidPlays(currentPlayer);
       }
       // check special cards
       String value = model.checkSpecialCard(model.getTopCardInPile(false)); // A J 2 | 7 8
-      // probably will have to use deques for this to work??
-      if (currentPlayer == 2) {
-        currentPlayer = 1;
-      }
-      else {
-        currentPlayer++;
-      }
       specialCardPlayed(value, currentPlayer);
+      currentPlayer = model.getNextPlayer(currentPlayer, false);
     }
   }
 
@@ -93,46 +89,110 @@ public class Controller implements GameController {
    * The playCard() method is used during a player's turn where a player selects a card in their
    * hand to play and the request is granted it valid, otherwise, they are prompted to choose a
    * different valid card, or forced to draw a card.
-   * @param player representation of the current player's turn as a String
+   * @param p
    */
-  private void playCard(String player) {
+  private void playCard(Player p) {
     Scanner sc = new Scanner(rd);
     String nextPlay = sc.next();
     if (model.canPlayCard(nextPlay)) {
-      model.updateHand(nextPlay, Integer.parseInt(player));
+      model.updateHand(nextPlay, p);
     }
     else {
       view.printInvalidPlay();
-      playCard(player);
+      playCard(p);
     }
   }
 
   /**
    *
    * @param value
-   * @param player
+   * @param p
    */
-  private void specialCardPlayed(String value, int player) {
-    if (value.equals("J")) {
-      model.drawCards(7, player);
+  private void specialCardPlayed(String value, Player p) {
+    PlayCommand command = null;
+    switch (value) {
+      case "J":
+        command = new Draw7Command(p);
+        break;
+      case "2":
+        command = new Draw2Command(p);
+        break;
+      case "8":
+        command = new ChangeSuit8Command(p);
+        break;
+      case "7":
+        command = new Reverse7Command(p);
+        break;
+      case "A":
+        command = new SkipCommand(p);
+        break;
     }
-    else if (value.equals("2")) {
-      model.drawCards(2, player);
+    try {
+      command.execute();
     }
-    else if (value.equals("8")) {
-      // ask for suit
-    }
-    else if (value.equals("7")) {
-      // reverse direction
+    catch (Exception e) {
+      // do nothing; all program to continue running
+      // not sure if best way to handle, but this is what we'll do for now
     }
   }
 
-  // use deques for updating players instead? so things are linked??
-  // implement command-design pattern??
-//  static class SkipCardCommand implements PlayCommand {
-//    @Override
-//    public void execute() {
-//
-//    }
-//  }
+  public class SkipCommand extends PlayCommand {
+    public SkipCommand(Player current) {
+      super(current);
+    }
+
+    @Override
+    void execute() {
+      model.getNextPlayer(current.getNextPlayer(), false);
+    }
+  }
+
+  public class Draw2Command extends PlayCommand {
+    public Draw2Command(Player current) {
+      super(current);
+    }
+
+    @Override
+    void execute() {
+      model.drawCards(2, current.getNextPlayer());
+      PlayCommand skip = new SkipCommand(current.getNextPlayer());
+      skip.execute();
+    }
+  }
+
+  public class Draw7Command extends PlayCommand {
+    public Draw7Command(Player current) {
+      super(current);
+    }
+
+    @Override
+    void execute() {
+      model.drawCards(7, current.getNextPlayer());
+      PlayCommand skip = new SkipCommand(current.getNextPlayer());
+      skip.execute();
+    }
+  }
+
+  public class ChangeSuit8Command extends PlayCommand {
+    public ChangeSuit8Command(Player current) {
+      super(current);
+    }
+
+    @Override
+    void execute() {
+      view.printPlayerChooseNewSuit(current.getPlayerName());
+      // retrieve suit and change what cards next player can play accordingly
+    }
+  }
+
+  public class Reverse7Command extends PlayCommand {
+    public Reverse7Command(Player current) {
+      super(current);
+    }
+
+    @Override
+    void execute() {
+      model.getNextPlayer(current, true);
+    }
+  }
 }
