@@ -6,6 +6,12 @@ import Model.Card;
 import View.GameView;
 
 public class ViewMock implements GameView {
+  private Appendable log;
+
+  public ViewMock(Appendable log) {
+    this.log = log;
+  }
+
   @Override
   public void welcomeMessage() {
 
@@ -42,7 +48,7 @@ public class ViewMock implements GameView {
   }
 
   @Override
-  public void printDrawCards(String player, String sc) {
+  public void printDrawCards(String player, String sc, int numCards) {
 
   }
 

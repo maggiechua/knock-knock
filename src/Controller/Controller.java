@@ -64,8 +64,9 @@ public class Controller implements GameController {
     //   automatically win; otherwise, keep playing until only one person left with cards
     model.getTopCardInPile(true);
     model.setUpOrder();
-    Player currentPlayer = model.getNextPlayer(null, false);
+    model = model.updateNextPlayer(null, false);
     while (!endGame) {
+      Player currentPlayer = model.getCurrentPlayer();
       view.printTopCardInPile(model.getTopCardInPile(false));
       if (!model.hasValidPlays(currentPlayer)) {
         model.drawCards(1, currentPlayer);
@@ -81,7 +82,6 @@ public class Controller implements GameController {
       // check special cards
       String value = model.checkSpecialCard(model.getTopCardInPile(false)); // A J 2 | 7 8
       specialCardPlayed(value, currentPlayer);
-      currentPlayer = model.getNextPlayer(currentPlayer, false);
     }
   }
 
@@ -130,6 +130,8 @@ public class Controller implements GameController {
       case "A":
         command = new SkipCommand(p);
         break;
+      default:
+        model = model.updateNextPlayer(p, false);
     }
     try {
       command.execute();
@@ -151,7 +153,7 @@ public class Controller implements GameController {
 
     @Override
     void execute() {
-      model.getNextPlayer(current.getNextPlayer(), false);
+      model = model.updateNextPlayer(current, false);
     }
   }
 
@@ -166,7 +168,7 @@ public class Controller implements GameController {
 
     @Override
     void execute() {
-      view.printDrawCards(current.getNextPlayer().getPlayerName(), "Draw 2");
+      view.printDrawCards(current.getNextPlayer().getPlayerName(), "Draw 2", 2);
       model.drawCards(2, current.getNextPlayer());
       PlayCommand skip = new SkipCommand(current.getNextPlayer());
       skip.execute();
@@ -184,7 +186,7 @@ public class Controller implements GameController {
 
     @Override
     void execute() {
-      view.printDrawCards(current.getNextPlayer().getPlayerName(), "♣J");
+      view.printDrawCards(current.getNextPlayer().getPlayerName(), "♣J", 7);
       model.drawCards(7, current.getNextPlayer());
       PlayCommand skip = new SkipCommand(current.getNextPlayer());
       skip.execute();
@@ -232,7 +234,7 @@ public class Controller implements GameController {
       model.hasValidPlays(current.getPrevPlayer());
       playCard(current.getPrevPlayer());
 
-      model.getNextPlayer(current, true);
+      model.updateNextPlayer(current, true);
     }
   }
 }

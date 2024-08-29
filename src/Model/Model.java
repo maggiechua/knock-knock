@@ -13,6 +13,7 @@ public class Model implements GameModel {
   private Map<Card, String> rules;
   private CardDeck cardDeck;
   private LinkedList<Player> order;
+  private Player currentPlayer;
 
   /**
    * The Model constructor takes in a list of players, a map representing a card and its
@@ -21,11 +22,18 @@ public class Model implements GameModel {
    * @param rules a Map representation of the rules depending on the card
    * @param cardDeck a CardDeck object representing cards in play
    */
-  public Model(List<Player> players, Map<Card, String> rules, CardDeck cardDeck) {
+  public Model(List<Player> players, Map<Card, String> rules, CardDeck cardDeck,
+               LinkedList<Player> order, Player currentPlayer) {
     this.players = players;
     this.rules = rules;
     this.cardDeck = cardDeck;
-    this.order = new LinkedList<Player>();
+    this.order = order;
+    this.currentPlayer = currentPlayer;
+  }
+
+  @Override
+  public Player getCurrentPlayer() {
+    return currentPlayer;
   }
 
   @Override
@@ -93,15 +101,15 @@ public class Model implements GameModel {
   }
 
   @Override
-  public Player getNextPlayer(Player current, boolean reverse) {
+  public GameModel updateNextPlayer(Player current, boolean reverse) {
     if (current == null) {
-      return order.getFirst();
+      return new Model(players, rules, cardDeck, order, order.getFirst());
     }
     else if (reverse) {
-      return current.getPrevPlayer();
+      return new Model(players, rules, cardDeck, order, current.getPrevPlayer());
     }
     else {
-      return current.getNextPlayer();
+      return new Model(players, rules, cardDeck, order, current.getNextPlayer());
     }
   }
 
@@ -117,9 +125,7 @@ public class Model implements GameModel {
 
   @Override
   public String checkSpecialCard(Card c) {
-    System.out.println(c.getSuit() + " " + c.getValue());
     return cardDeck.specialCard(c);
-    // need to convert the card in order for it work
   }
 
   @Override

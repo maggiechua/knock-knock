@@ -9,6 +9,8 @@ import java.util.Random;
  */
 public interface GameModel {
 
+  Player getCurrentPlayer();
+
   void createPrivateRoom();
 
   void changeDisplayMode();
@@ -35,7 +37,7 @@ public interface GameModel {
   void generateHands();
 
 
-  Player getNextPlayer(Player current, boolean reverse);
+  GameModel updateNextPlayer(Player current, boolean reverse);
 
   /**
    * The getHand() method is used to retrieve a given player's hand, displaying all the cards
