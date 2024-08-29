@@ -27,7 +27,7 @@ public class GuiView extends JFrame {
       @Override
       public void paint(Graphics g) {
         super.paint(g);
-        Image hiddenCard = new ImageIcon(getClass().getResource("/cards/BACK.png")).getImage();
+        Image hiddenCard = new ImageIcon(getClass().getResource("/normalDeck/BACK.png")).getImage();
         g.drawImage(hiddenCard, 20, 20, cardWidth, cardHeight, null);
       }
     };
