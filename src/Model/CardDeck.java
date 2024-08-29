@@ -90,6 +90,7 @@ public class CardDeck {
   public boolean checkPlay (String card) {
     Card topCard = getTopCardInPile();
     String suit = convertSuit(card.charAt(0) + "");
+    // create a method to check valid value provided?
     Card given = new Card(suit, card.charAt(1) + "");
     return topCard.getSuit().equals(given.getSuit()) || topCard.getValue().equals(given.getValue());
   }
@@ -182,20 +183,17 @@ public class CardDeck {
    * @return the converted suit to the String
    */
   public String convertSuit(String s) {
-    if (s.equals("D")) {
-      return "◆";
-    }
-    else if (s.equals("C")) {
-      return "♣";
-    }
-    else if (s.equals("H")) {
-      return "♥";
-    }
-    else if (s.equals("S")) {
-      return "♠";
-    }
-    else {
-      return s;
+    switch (s) {
+      case "D":
+        return "◆";
+      case "C":
+        return "♣";
+      case "H":
+        return "♥";
+      case "S":
+        return "♠";
+      default:
+        return s;
     }
   }
 

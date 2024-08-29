@@ -75,13 +75,28 @@ public class ModelTest {
     controller = new ControllerMock();
   }
 
+  // invalid card given -> input contains typos: hQ, Hq, H* -> higher level function call
+  // assertFalse(deck1.checkPlay("hQ"));
+  // assertFalse(deck1.checkPlay("Hq"));
+  // assertFalse(deck1.checkPlay("H*"));
+
   // {GAME SETUP TESTS}
   @Test
-  public void startingCardNotSpecialCard() {
+  public void testStartingCardNotSpecialCard() {
 
   }
 
   // {GAMEPLAY TESTS}
+  @Test
+  public void testCanPlayCard() {
+
+  }
+
+  @Test
+  public void testRemovePlayedCardFromPlayerHand() {
+
+  }
+
 
   // {WIN CASE TESTS}
 }
