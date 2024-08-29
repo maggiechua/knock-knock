@@ -127,9 +127,9 @@ public class View implements GameView {
   }
 
   @Override
-  public void printDrawCards(String player, String sc) {
-    writeMessage("As a " + sc + " card was just played, two cards were added to your hand " +
-            "and your turn was skipped, " + player + ". \n");
+  public void printDrawCards(String player, String sc, int numCards) {
+    writeMessage("As a " + sc + " card was just played, " + numCards + " cards were added to " +
+            "your hand and your turn was skipped, " + player + ". \n");
   }
 
   @Override

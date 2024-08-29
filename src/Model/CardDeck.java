@@ -3,10 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 
@@ -20,13 +18,15 @@ public class CardDeck {
   private Queue<Card> drawPile;
   private int numDecks;
   private List<Card> specialCards;
+  private Random rand;
 
   /**
    * The CardDeck constructor is an object that represents the cards in circulation for the current
    * game of Knock-Knock.
    * @param numDecks the given number of card decks that will be in play
+   * @param rand the given Random seeded value for shuffling the cards in the deck
    */
-  public CardDeck(Integer numDecks) {
+  public CardDeck(Integer numDecks, Random rand) {
     this.cards = new ArrayList<Card>();
     this.drawPile = new LinkedList<Card>();
     this.numDecks = numDecks;
@@ -49,6 +49,7 @@ public class CardDeck {
             new Card("♠", "A"),
             new Card("♠", "7")
     ));
+    this.rand = rand;
     generateDeck();
   }
 
@@ -94,9 +95,10 @@ public class CardDeck {
   }
 
   /**
-   *
+   * The specialCard() method checks if the given Card is one of the following: 2, 8, 7, A, ♣J.
+   * It returns the card's value if it is a special card, otherwise it returns an empty String.
    * @param c the given Card object
-   * @return
+   * @return a String representation of the card's value
    */
   public String specialCard(Card c) {
     String value = "";
@@ -159,7 +161,7 @@ public class CardDeck {
    * to the draw pile.
    */
   private void resetDeck() {
-    Collections.shuffle(cards, new Random());
+    Collections.shuffle(cards, rand);
     setUpDrawPile();
     cards.clear();
   }

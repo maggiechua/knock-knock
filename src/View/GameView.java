@@ -57,8 +57,10 @@ public interface GameView {
    * a draw 2 special card was played by the previous player, 2 cards have been added to their
    * hand and their turn is skipped.
    * @param player a String representation of the player's name
+   * @param sc  a String representation of the special card played
+   * @param numCards an Integer representation of the number of cards drawn
    */
-  void printDrawCards(String player, String sc);
+  void printDrawCards(String player, String sc, int numCards);
 
   /**
    *
