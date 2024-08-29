@@ -3,6 +3,9 @@ package Tests.Model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import Model.Card;
@@ -22,12 +25,32 @@ public class CardDeckTest {
   CardDeck deck1;
   CardDeck deck2;
   CardDeck deck5;
+  List<Card> specialCards;
 
   @Before
   public void setUp() {
     deck1 = new CardDeck(1, new Random(20));
     deck2 = new CardDeck(2, new Random(20));
     deck5 = new CardDeck(5, new Random(20));
+    specialCards = new ArrayList<Card>(Arrays.asList(
+            new Card("♣", "J"),
+            new Card("◆", "2"),
+            new Card("◆", "8"),
+            new Card("◆", "A"),
+            new Card("◆", "7"),
+            new Card("♣", "2"),
+            new Card("♣", "8"),
+            new Card("♣", "A"),
+            new Card("♣", "7"),
+            new Card("♥", "2"),
+            new Card("♥", "8"),
+            new Card("♥", "A"),
+            new Card("♥", "7"),
+            new Card("♠", "2"),
+            new Card("♠", "8"),
+            new Card("♠", "A"),
+            new Card("♠", "7")
+    ));
   }
 
   @Test
@@ -41,5 +64,28 @@ public class CardDeckTest {
   @Test
   public void testGenerateDeck() {
 
+  }
+
+  @Test
+  public void testSpecialCard() {
+
+  }
+
+  @Test
+  public void testConvertSuit() {
+    // converting valid inputs for String to suit symbol conversion
+    String diamonds = deck1.convertSuit("D");
+    assertEquals("◆", diamonds);
+    String clubs = deck1.convertSuit("C");
+    assertEquals("♣", clubs);
+    String hearts = deck1.convertSuit("H");
+    assertEquals("♥", hearts);
+    String spades = deck1.convertSuit("S");
+    assertEquals("♠", spades);
+
+    // providing invalid inputs for conversion -> although this scenario does not happen
+    // based on the restrictions we place when calling the method
+    String invalid = deck1.convertSuit("9");
+    assertEquals("", invalid);
   }
 }
