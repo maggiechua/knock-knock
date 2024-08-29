@@ -35,7 +35,7 @@ public class KnockKnockGame {
             "8 of hearts)");
     baseRules.put(new Card("any", "A"), "skip the next player's turn");
     baseRules.put(new Card("any", "7"), "reverse direction");
-    CardDeck cardDeck = new CardDeck(1, new Random());
+    CardDeck cardDeck = new CardDeck(2, new Random());
     List<Player> players = new ArrayList<>(Arrays.asList(
             new Player("Player 1", new ArrayList<Card>(), cardDeck),
             new Player("Player 2", new ArrayList<Card>(), cardDeck),
