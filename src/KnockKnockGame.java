@@ -44,19 +44,19 @@ public class KnockKnockGame {
     // Text-based game View
     GameView view = new View(System.out);
     // GUI ver View
-    GuiView.setDefaultLookAndFeelDecorated(false);
-    GuiView guiView = new GuiView();
-    guiView.setVisible(true);
-    guiView.setLocationRelativeTo(null);
+//    GuiView.setDefaultLookAndFeelDecorated(false);
+//    GuiView guiView = new GuiView();
+//    guiView.setVisible(true);
+//    guiView.setLocationRelativeTo(null);
 
     // Text-based game Controller
     GameController controller = new Controller(model, view);
     // GUI ver Controller
-    GameController guiController = new GuiController(model, view);
-    guiView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    guiView.setVisible(true);
+//    GameController guiController = new GuiController(model, view);
+//    guiView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    guiView.setVisible(true);
 
-    //controller.execute();
-    guiController.execute();
+    controller.execute();
+//    guiController.execute();
   }
 }
