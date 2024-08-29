@@ -85,8 +85,6 @@ public class Controller implements GameController {
     }
   }
 
-  // make basicGameplay items abstracted into commands as well??
-
   /**
    * The playCard() method is used during a player's turn where a player selects a card in their
    * hand to play and the request is granted it valid, otherwise, they are prompted to choose a
@@ -97,6 +95,8 @@ public class Controller implements GameController {
     Scanner sc = new Scanner(rd);
     String nextPlay = sc.next();
     if (model.canPlayCard(nextPlay)) {
+      // method doesn't work consistently - sometimes catches false cards, other times doesn't
+      // for instance Hq H* 
       model.updateHand(nextPlay, p);
     }
     else {
@@ -132,6 +132,8 @@ public class Controller implements GameController {
         break;
       default:
         model = model.updateNextPlayer(p, false);
+        // need to pass in reverse value instead of automatically setting to false
+        break;
     }
     try {
       command.execute();
