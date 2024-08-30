@@ -62,8 +62,33 @@ public class CardDeckTest {
     return specialCard;
   }
 
+  /**
+   * The checkCardEquality() method determines if the given two cards are equivalent in
+   * BOTH suit and value.
+   * @param c1 the first given Card
+   * @param c2 the second given Card
+   * @return True if the cards are equivalent; False if otherwise
+   */
   private boolean checkCardEquality(Card c1, Card c2) {
     return c1.getSuit().equals(c2.getSuit()) && c1.getValue().equals(c2.getValue());
+  }
+
+  /**
+   * The checkCardFrequency() method determines how many times a given card appears in a
+   * drawPile. If the drawPile consists of x decks of cards, each unique card should
+   * have a total count of x times.
+   * @param card the given Card
+   * @param drawPile the given drawPile
+   * @return an Integer representation of the total number of times a given Card appears
+   */
+  private int checkCardFrequency(Card card, Queue<Card> drawPile) {
+    int count = 0;
+    for (Card c : drawPile) {
+      if (checkCardEquality(card, c)) {
+        count++;
+      }
+    }
+    return count;
   }
 
   /**
@@ -94,18 +119,18 @@ public class CardDeckTest {
     assertEquals(52, drawPile1.size());
     // checks that the draw pile has the correct quantity of each card if multiple decks are
     // utilized
-    for (Card c : drawPile1) {
-      //
+    for (Card c : normalDeck) {
+      assertEquals(1, checkCardFrequency(c, drawPile1));
     }
     // checks that the draw pile has been shuffled (its order should not be the same as a new
     // pack of playing cards) -> how do we prove this???
-    for (Card c : drawPile1) {
-      System.out.print(c.getSuit() + c.getValue() + " ");
-    }
-    System.out.println("\n");
 
     Queue<Card> drawPile2 = retrieveCardsInDrawPile(deck2, 2);
     assertEquals(104, drawPile2.size());
+    for (Card c : normalDeck) {
+      assertEquals(2, checkCardFrequency(c, drawPile2));
+    }
+
     for (Card c : drawPile2) {
       System.out.print(c.getSuit() + c.getValue() + " ");
     }
@@ -113,6 +138,10 @@ public class CardDeckTest {
 
     Queue<Card> drawPile3 = retrieveCardsInDrawPile(deck5, 5);
     assertEquals(260, drawPile3.size());
+    for (Card c : normalDeck) {
+      assertEquals(5, checkCardFrequency(c, drawPile3));
+    }
+
     for (Card c : drawPile3) {
       System.out.print(c.getSuit() + c.getValue() + " ");
     }
@@ -120,9 +149,47 @@ public class CardDeckTest {
 
   @Test
   public void testDrawCard() {
+    CardDeck deck1Copy = new CardDeck(1, new Random(20));
+    Queue<Card> drawPile = retrieveCardsInDrawPile(deck1Copy, 1);
     // normal
+    Card firstCardExpected = drawPile.poll();
+    Card firstCardActual = deck1.drawCard();
+    assertEquals(firstCardExpected.getSuit() + firstCardExpected.getValue(),
+            firstCardActual.getSuit() + firstCardActual.getValue());
 
-    // when there are no cards remaining in the draw pile
+    // a test to see if cards are drawn from the draw pile x times (bounded by 50 since we are
+    // only using a single deck) are equivalent to what is expected in the copy
+    for (int i = 0; i < new Random().nextInt(50); i++) {
+      Card expectedCard = drawPile.poll();
+      Card actualCard = deck1.drawCard();
+      assertEquals(expectedCard.getSuit() + expectedCard.getValue(),
+              actualCard.getSuit() + actualCard.getValue());
+    }
+
+    Card randCardExpected = drawPile.poll();
+    Card randCardActual = deck1.drawCard();
+    assertEquals(randCardExpected.getSuit() + randCardExpected.getValue(),
+            randCardActual.getSuit() + randCardActual.getValue());
+
+    // when there are no cards remaining in the draw pile, so the cards that were played
+    // are reshuffled to create a new draw pile
+    CardDeck deck2Copy = new CardDeck(2, new Random(20));
+    Queue<Card> drawPile2 = retrieveCardsInDrawPile(deck2Copy, 2);
+    List<Card> playPile = new ArrayList<>();
+
+    //
+    for (int i = 0; i < 100; i++) {
+      Card e = drawPile2.poll();
+      Card a = deck2.drawCard();
+      System.out.println(e.getSuit() + e.getValue() + " | " + a.getSuit() + a.getValue());
+      playPile.add(e);
+      deck5.addPlayedCard(a);
+    }
+
+    Card finalCardExpected = drawPile2.poll();
+    Card finalCardActual = deck2.drawCard();
+    assertEquals(finalCardExpected.getSuit() + finalCardExpected.getValue(),
+            finalCardActual.getSuit() + finalCardActual.getValue());
   }
 
   /**
